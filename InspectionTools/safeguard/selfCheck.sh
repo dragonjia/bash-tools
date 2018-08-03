@@ -69,14 +69,16 @@ prod_conf="/opt/webapps/ROOT/WEB-INF/classes/application-${DeployWhich}.properti
     redisport=`cat $prod_conf|grep -v "#"|grep ".redis.port"|awk -F'=' '{print $2}'`
 
     ip=$redisip;port=$redisport
-    ip=`echo $ip|tr -d \r|tr -d \n`
-    port=`echo $port|tr -d \r|tr -d \n`
+    ip=`echo $ip|tr -d \r|tr -d \n|sed 's/
+//g'`
+    port=`echo $port|tr -d \r|tr -d \n|sed 's/
+//g'`
     #检测 DB是否可用
     r=$(bash -c 'exec 3<> /dev/tcp/'$ip'/'$port';echo $?' 2>/dev/null)
     if [ "$r" = "0" ]; then
-         echo "OK , redis $ip@$port 端口可达 "
+         echo "OK , redis $ip:$port 端口可达 "
     else
-         echo "Warning , redis $ip@$port 端口不可达！ "
+         echo "Warning , redis $ip:$port 端口不可达！ "
     fi
 
 
