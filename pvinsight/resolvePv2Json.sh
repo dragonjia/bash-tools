@@ -53,16 +53,14 @@ if [[ $hasNew -gt 0 ]]
 then
     mv ${outfile}.new ${outfile}.${newTime}
     echo "new json created: ${outfile}.${newTime} "
+    echo "开始解析pingback json..."
+    while read json
+    do
+        printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
+
+    done<  ${outfile}.${newTime}
 
 else
     echo "no change detected"
 
 fi
-
-echo "开始解析pingback json..."
-
-while read json
-do
-    printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
-
-done<  ${outfile}.${newTime}
