@@ -46,11 +46,12 @@ if(time>lastTime){
 
 ##back up json data
 newTime=`cat $lastFile`
-if [[ $newTime -ne $lastTime ]]
-then
+##如果没有新的日志变化，则不生产数据json
+if [ `echo "$lastTime < $newTime"|bc` -eq 1 ] ; then
     mv ${outfile}.new ${outfile}.${newTime}
     echo "new json created: ${outfile}.${newTime} "
 
 else
     echo "no change detected"
+
 fi
