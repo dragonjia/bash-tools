@@ -58,8 +58,8 @@ then
         clickName=`printf $(echo -n  $click | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"`
         echo "$json"|
           jq "map(if .ck != ''
-                then  .key = $clickName
-                else
+                then  . + {\"click\":\"$clickName\"}
+                else .
                 end)"
 
 
