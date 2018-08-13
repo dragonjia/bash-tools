@@ -2,7 +2,7 @@
 
 file='/usr/local/nginx/logs/pv_access.log'
 lastFile="last.log"
-
+outfile=pingback_json.log
 
 lastTime=`cat $lastFile`
 if [[ -z $lastTime ]];
@@ -41,4 +41,9 @@ if(time>lastTime){
 }
 }END{svn
   print time > "'$lastFile'"
-}' |  jq -r '.'
+}' > ${outfile}.new
+
+
+##back up json data
+lastTime=`cat $lastFile`
+mv ${outfile}.new ${outfile}.${lastTime}
