@@ -12,8 +12,7 @@ fi
 
 echo $lastTime
 
-tail -100000 $file |awk -v lastTime=$lastTime ' \
-function urlDecode(url) {
+tail -100000 $file |awk -v lastTime=$lastTime 'function urlDecode(url) {
     for (i = 0x20; i < 0x40; ++i) {
         repl = sprintf("%c", i);
         if ((repl == "&") || (repl == "\\")) {
@@ -43,4 +42,4 @@ if(time>lastTime){
 }
 }END{svn
   print time > "'$lastFile'"
-}'|jq -r '.'
+}' | jq -r '.'
