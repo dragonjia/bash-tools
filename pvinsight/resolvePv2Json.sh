@@ -54,14 +54,7 @@ then
     while read json
     do
 #        printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
-        click=`echo "$json" | jq -r '.ck'`
-        clickName=`printf $(echo -n  $click | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"`
-        echo "$json"|
-          jq "map(if .ck != \"\"
-                then  . + {\"click\":\"$clickName\"}
-                else .
-                end)"
-
+        printf $(echo -n  $json|sed 's/ /@@@/g' | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|sed 's/@@@/ /g' |jq -r '.'
 
     done<  ${outfile}.${newTime}
 
