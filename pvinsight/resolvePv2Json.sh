@@ -45,5 +45,12 @@ if(time>lastTime){
 
 
 ##back up json data
-lastTime=`cat $lastFile`
-mv ${outfile}.new ${outfile}.${lastTime}
+newTime=`cat $lastFile`
+if [[ $newTime -ne $lastTime ]]
+then
+    mv ${outfile}.new ${outfile}.${newTime}
+    echo "new json created: ${outfile}.${newTime} "
+
+else
+    echo "no change detected"
+fi
