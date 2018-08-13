@@ -47,7 +47,7 @@ if(time>lastTime){
 ##back up json data
 newTime=`cat $lastFile`
 ##如果没有新的日志变化，则不生产数据json
-hasNew=`awk -v last=$lastTime -v new=$newTime '{printf("%d"),new*1000-last*1000}'`
+hasNew=`echo 1|awk -v last=$lastTime -v new=$newTime '{printf("%d"),new*1000-last*1000}'`
 if [[ $hasNew -gt 0 ]]
 then
     mv ${outfile}.new ${outfile}.${newTime}
