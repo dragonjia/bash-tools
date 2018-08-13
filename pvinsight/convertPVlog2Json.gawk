@@ -19,7 +19,7 @@ BEGIN{
 }
 {
 ip=$1;
-split($7,"=",m);
+split($7,m,"=");
 for(i=1;i<10;i+=2){
     if(index(m[i],"pvInsightObj")>0){
         print urlDecode(m[i+1])
