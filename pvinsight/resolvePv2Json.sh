@@ -63,6 +63,6 @@ echo "开始解析pingback json..."
 
 while read json
 do
-    echo "$json"|jq -r '.'
+    printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
 
 done<  ${outfile}.${newTime}
