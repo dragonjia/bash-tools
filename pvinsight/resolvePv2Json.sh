@@ -10,7 +10,7 @@ then
     lastTime=0
 fi
 
-echo $lastTime
+
 
 tail -100000 $file |awk -v lastTime=$lastTime 'function urlDecode(url) {
     for (i = 0x20; i < 0x40; ++i) {
@@ -61,6 +61,6 @@ then
     done<  ${outfile}.${newTime}
 
 else
-    echo "no change detected"
+    echo "no change detected (上次断点id=$lastTime)"
 
 fi
