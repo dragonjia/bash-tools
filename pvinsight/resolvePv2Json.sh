@@ -33,11 +33,8 @@ ip=$1;
 req=$7;
 if(time>lastTime){
     split(req,m,"pvInsightObj=");
-    for(i=1;i<10;i+=2){
-        if(index(m[i],"/pv.gif")==0){
-            print urlDecode(m[i+1])
-            break;
-        }
+    if(index(m[1],"/pv.gif")>-1){
+        print urlDecode(m[2])
     }
 }
 }END{
@@ -56,7 +53,15 @@ then
     echo "开始解析pingback json..."
     while read json
     do
-        printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
+#        printf $(echo -n  $json | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"|jq -r '.'
+        click=`echo "$json" | jq -r '.ck'`
+        clickName=`printf $(echo -n  $click | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n"`
+        echo "$json"|
+          jq "map(if .ck != ""
+                then  .key = $clickName
+                else
+                end)"
+
 
     done<  ${outfile}.${newTime}
 
