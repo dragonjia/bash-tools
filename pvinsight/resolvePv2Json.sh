@@ -31,7 +31,6 @@ BEGIN{
 time=$3;
 ip=$1;
 req=$7;
-printf("debug:time=%s\r\n",time);
 if(time>lastTime){
     split($req,m,"=");
     for(i=1;i<10;i+=2){
@@ -42,4 +41,4 @@ if(time>lastTime){
 }
 }END{svn
   print time > "'$lastFile'"
-}' | jq -r '.'
+}' |  jq -r '.'
