@@ -9,7 +9,7 @@ fi
 
 echo $lastTime
 
-tail -100f ../logs/pv_access.log |awk -v lastTime=$lastTime '
+tail -10000 $file |awk -v lastTime=$lastTime '
 function urlDecode(url) {
     for (i = 0x20; i < 0x40; ++i) {
         repl = sprintf("%c", i);
