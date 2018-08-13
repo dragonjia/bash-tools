@@ -25,14 +25,14 @@ tail -100000 $file |awk -v lastTime=$lastTime 'function urlDecode(url) {
 }
 
 BEGIN{
-    #FS="\""
+
 }
 {
 time=$3;
 ip=$1;
 req=$7;
 if(time>lastTime){
-    split($req,m,"=");
+    split(req,m,"=");
     for(i=1;i<10;i+=2){
         if(index(m[i],"pvInsightObj")>0){
             print urlDecode(m[i+1])
