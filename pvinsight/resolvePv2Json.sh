@@ -36,10 +36,11 @@ if(time>lastTime){
     for(i=1;i<10;i+=2){
         if(index(m[i],"pvInsightObj")>0){
             print urlDecode(m[i+1])
+            break;
         }
     }
 }
-}END{svn
+}END{
   print time > "'$lastFile'"
 }' > ${outfile}.new
 
