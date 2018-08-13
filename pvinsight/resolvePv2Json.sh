@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-file='/usr/local/nginx/logs/pv_access_log'
-lastTime=`cat last.log`
+file='/usr/local/nginx/logs/pv_access.log'
+lastFile="last.log"
+
+
+lastTime=`cat $lastFile`
 if [[ -z $lastTime ]];
 then
     lastTime=0
@@ -9,7 +12,7 @@ fi
 
 echo $lastTime
 
-tail -10000 $file |awk -v lastTime=$lastTime '
+tail -100000 $file |awk -v lastTime=$lastTime ' \
 function urlDecode(url) {
     for (i = 0x20; i < 0x40; ++i) {
         repl = sprintf("%c", i);
@@ -28,13 +31,16 @@ BEGIN{
 {
 time=$3;
 ip=$1;
+req=$7;
+printf("debug:time=%s\r\n",time);
 if(time>lastTime){
-    split($7,m,"=");
+    split($req,m,"=");
     for(i=1;i<10;i+=2){
         if(index(m[i],"pvInsightObj")>0){
             print urlDecode(m[i+1])
         }
     }
 }
-}END{
-}'
+}END{svn
+  print time > "'$lastFile'"
+}'|jq -r '.'
