@@ -58,3 +58,11 @@ else
     echo "no change detected"
 
 fi
+
+echo "开始解析pingback json..."
+
+while read json
+do
+    echo "$json"|jq -r '.'
+
+done<  ${outfile}.${newTime}
