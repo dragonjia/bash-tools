@@ -32,9 +32,9 @@ time=$3;
 ip=$1;
 req=$7;
 if(time>lastTime){
-    split(req,m,"=");
+    split(req,m,"pvInsightObj=");
     for(i=1;i<10;i+=2){
-        if(index(m[i],"pvInsightObj")>0){
+        if(index(m[i],"/pv.gif")==0){
             print urlDecode(m[i+1])
             break;
         }
